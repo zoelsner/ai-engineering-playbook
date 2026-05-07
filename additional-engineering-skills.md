@@ -1,5 +1,11 @@
 # Additional Engineering Skills & Approaches
 
+> **Source:** Every skill, pattern, and quote in this document comes from [**mattpocock/skills**](https://github.com/mattpocock/skills) ("Skills for Real Engineers") by [Matt Pocock](https://github.com/mattpocock). All credit for the skills, methodologies, and engineering insights goes to him. This document is my synthesis and commentary — the originals are the canonical reference.
+>
+> Direct sources used: [README.md](https://github.com/mattpocock/skills/blob/main/README.md) · [CONTEXT.md (example)](https://github.com/mattpocock/skills/blob/main/CONTEXT.md) · [grill-with-docs](https://github.com/mattpocock/skills/blob/main/skills/engineering/grill-with-docs/SKILL.md) · [diagnose](https://github.com/mattpocock/skills/blob/main/skills/engineering/diagnose/SKILL.md) · [zoom-out](https://github.com/mattpocock/skills/blob/main/skills/engineering/zoom-out/SKILL.md) · [improve-codebase-architecture](https://github.com/mattpocock/skills/blob/main/skills/engineering/improve-codebase-architecture/SKILL.md) · [prototype](https://github.com/mattpocock/skills/blob/main/skills/engineering/prototype/SKILL.md) · [triage](https://github.com/mattpocock/skills/blob/main/skills/engineering/triage/SKILL.md) · [to-prd](https://github.com/mattpocock/skills/blob/main/skills/engineering/to-prd/SKILL.md)
+>
+> The lightstrikelabs comparisons in this document refer to [lightstrikelabs/repo-analyzer-green](https://github.com/lightstrikelabs/repo-analyzer-green) — see [repo-best-practices.md](repo-best-practices.md) for the full credits there.
+
 Companion to [repo-best-practices.md](repo-best-practices.md). Distilled from [mattpocock/skills](https://github.com/mattpocock/skills) ("Skills for Real Engineers"). The lightstrikelabs setup is a tightly integrated process framework. Matt's setup is the opposite: **small, composable skills you can pull in à la carte without buying a workflow**. Read together, they cover different muscles.
 
 ---
