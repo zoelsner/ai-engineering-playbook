@@ -1,6 +1,6 @@
 # AI Engineering Playbook
 
-Two complementary playbooks for building software with coding agents (Claude Code, Codex CLI, pi). Distilled from two of the sharpest open setups I've seen.
+Three complementary playbooks for building software with coding agents (Claude Code, Codex CLI, pi). Distilled from three of the sharpest open setups I've seen — process, skills, and output format.
 
 ## The Docs
 
@@ -37,9 +37,26 @@ Covers eleven approaches the integrated framework doesn't have:
 - The setup-skill bootstrap pattern for skills that share config
 - AI-disclaimer conventions for AI-generated PR/issue comments
 
+### [🖼️ html-as-medium.md](./html-as-medium.md)
+
+A render upgrade for the workflow you already have. Distilled from [Thariq Shihipar's HTML Effectiveness guide](https://thariqs.github.io/html-effectiveness/) — 20 worked demos that show when HTML beats markdown as the agent's output format.
+
+Covers nine situations where prose flattens information that's actually spatial, motion-based, or interactive:
+- **Exploration** — three code approaches or design directions side by side, then an implementation plan with timeline + risk table
+- **Code review** — annotated diffs, PR writeups, module maps as boxes-and-arrows
+- **Design** — design system tokens as swatches, component variants as contact sheets
+- **Prototyping** — animation sandboxes (motion has to be felt) and clickable flows
+- **Illustrations** — inline SVG figures and annotated flowcharts (the agent can draw)
+- **Decks** — arrow-key HTML slides, no Keynote, no build step
+- **Research** — feature/concept explainers with collapsibles, tabs, glossary
+- **Reports** — weekly status with charts, incident timelines
+- **Custom editing interfaces** — throwaway editors (triage board, flag editor, prompt tuner) that export decisions back as text the agent can consume
+
+The bridge to the other two docs: **most workflow steps already produce text artifacts that would be sharper as HTML.** This isn't a new workflow — it's a better artifact for `/zoom-out`, `/to-prd`, `/triage`, PR descriptions, and incident reports.
+
 ## How to Use These
 
-If you're starting fresh: read **repo-best-practices.md** first, adopt the AGENTS.md + slice workflow + hooks, then layer on the skills from **additional-engineering-skills.md** as you hit the situations they solve (alignment, debugging, design exploration).
+If you're starting fresh: read **repo-best-practices.md** first, adopt the AGENTS.md + slice workflow + hooks, then layer on the skills from **additional-engineering-skills.md** as you hit the situations they solve (alignment, debugging, design exploration). Once the workflow is humming, read **html-as-medium.md** to upgrade the artifacts each step produces.
 
 If you already have a workflow: skip to **additional-engineering-skills.md** and pick the highest-leverage additions:
 
@@ -48,10 +65,13 @@ If you already have a workflow: skip to **additional-engineering-skills.md** and
 3. `/diagnose` for disciplined debugging
 4. `/zoom-out` to reset agent context when it tunnels
 
+Then revisit **html-as-medium.md** for the three highest-leverage render upgrades: PR writeups as HTML, module maps as boxes-and-arrows, and visual design directions rendered side-by-side instead of described.
+
 ## Sources
 
 - [lightstrikelabs/repo-analyzer-green](https://github.com/lightstrikelabs/repo-analyzer-green) — the integrated framework
 - [mattpocock/skills](https://github.com/mattpocock/skills) — the composable skills
+- [Thariq Shihipar — HTML Effectiveness](https://thariqs.github.io/html-effectiveness/) — HTML as the agent's output medium
 
 ## License
 
