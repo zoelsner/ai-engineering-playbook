@@ -13,6 +13,7 @@ Covers:
 - `docs/architecture.md` as required reading
 - Cross-agent skill layout (`.agents/skills/` with symlinks for Claude/Codex/pi)
 - A senior engineering loop for goal-driven execution, real validation after each meaningful step, and second-opinion gates before high-cost designs
+- Accessibility acceptance criteria and UI state matrices in issue/PR templates
 - Three-surface red-green enforcement (PreToolUse hook + lefthook + CI)
 - Issue + PR templates that mirror each other
 - Conventional Commits enforcement at three layers
@@ -58,7 +59,7 @@ The bridge to the other two docs: **most workflow steps already produce text art
 
 ## How to Use These
 
-If you're starting fresh: read **repo-best-practices.md** first, adopt the AGENTS.md + slice workflow + hooks, and add the senior engineering loop to keep agents working past "it runs" toward architecture, implementation, validation, and review. Then layer on the skills from **additional-engineering-skills.md** as you hit the situations they solve (alignment, debugging, design exploration). Once the workflow is humming, read **html-as-medium.md** to upgrade the artifacts each step produces.
+If you're starting fresh: read **repo-best-practices.md** first, adopt the AGENTS.md + slice workflow + hooks, add the senior engineering loop, and make accessibility/state matrices part of every UI issue and PR. Then layer on the skills from **additional-engineering-skills.md** as you hit the situations they solve (alignment, debugging, design exploration). Once the workflow is humming, read **html-as-medium.md** to upgrade the artifacts each step produces.
 
 If you already have a workflow: skip to **additional-engineering-skills.md** and pick the highest-leverage additions:
 
@@ -77,6 +78,7 @@ Then revisit **html-as-medium.md** for the three highest-leverage render upgrade
 - [jakubkrehel/make-interfaces-feel-better](https://github.com/jakubkrehel/make-interfaces-feel-better) — frontend UI polish skill
 - [Thariq Shihipar — HTML Effectiveness](https://thariqs.github.io/html-effectiveness/) — HTML as the agent's output medium
 - [Theo on a Codex first loop](https://x.com/theo/status/2068595585121484866) and [Vox on senior-agent prompts](https://x.com/Voxyz_ai/status/2067237707483337118) — goal loops and second-opinion gates
+- [W3C WCAG overview](https://www.w3.org/WAI/standards-guidelines/wcag/) — accessibility reference
 
 ## License
 

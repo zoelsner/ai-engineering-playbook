@@ -5,6 +5,8 @@
 > Direct sources used: [AGENTS.md](https://github.com/lightstrikelabs/repo-analyzer-green/blob/main/AGENTS.md) · [docs/architecture.md](https://github.com/lightstrikelabs/repo-analyzer-green/blob/main/docs/architecture.md) · [docs/skills.md](https://github.com/lightstrikelabs/repo-analyzer-green/blob/main/docs/skills.md) · [docs/agent-compat.md](https://github.com/lightstrikelabs/repo-analyzer-green/blob/main/docs/agent-compat.md) · [docs/commit-messages.md](https://github.com/lightstrikelabs/repo-analyzer-green/blob/main/docs/commit-messages.md) · [.github/ISSUE_TEMPLATE/development-slice.md](https://github.com/lightstrikelabs/repo-analyzer-green/blob/main/.github/ISSUE_TEMPLATE/development-slice.md) · [.github/pull_request_template.md](https://github.com/lightstrikelabs/repo-analyzer-green/blob/main/.github/pull_request_template.md) · [.github/workflows/ci.yml](https://github.com/lightstrikelabs/repo-analyzer-green/blob/main/.github/workflows/ci.yml) · [lefthook.yml](https://github.com/lightstrikelabs/repo-analyzer-green/blob/main/lefthook.yml) · [.claude/settings.json](https://github.com/lightstrikelabs/repo-analyzer-green/blob/main/.claude/settings.json) · [.agents/skills/](https://github.com/lightstrikelabs/repo-analyzer-green/tree/main/.agents/skills)
 >
 > Added senior-loop sources: [Theo on a Codex first loop](https://x.com/theo/status/2068595585121484866) · [Vox on senior-agent prompts and goals](https://x.com/Voxyz_ai/status/2067237707483337118). The section below is a synthesis of the operating pattern, not a transcript.
+>
+> Added design acceptance source: [W3C WCAG overview](https://www.w3.org/WAI/standards-guidelines/wcag/), especially WCAG 2.2 as the current accessibility reference.
 
 A portable playbook distilled from [lightstrikelabs/repo-analyzer-green](https://github.com/lightstrikelabs/repo-analyzer-green). Drop the patterns here into any new repo and you get a setup where humans and coding agents (Claude Code, Codex CLI, pi) can collaborate with mechanical guardrails, traceable history, and a real architecture doc.
 
@@ -14,7 +16,7 @@ A portable playbook distilled from [lightstrikelabs/repo-analyzer-green](https:/
 
 Most repos treat process as documentation that nobody reads. This repo treats it as **layered enforcement** — the same rule appears in (1) docs, (2) chat-visible artifacts the agent must produce, (3) local hooks, and (4) CI/branch protection. When the agent forgets, the hook blocks the edit. When the hook is skipped, CI blocks the merge. When CI is wrong, a "Recent Misses" log captures the failure and tightens the rule.
 
-Six components do all the work:
+Seven components do all the work:
 
 1. **`AGENTS.md`** — agent constitution, with a hard "Before Any Code" gate
 2. **`docs/architecture.md`** — required reading, single source of architectural truth
@@ -22,6 +24,7 @@ Six components do all the work:
 4. **Three-surface red-green enforcement** — pre-tool hook, pre-commit hook, CI
 5. **Issue + PR templates that mirror each other** — same fields, same shape
 6. **A senior engineering loop** — goal-driven execution, real validation after each meaningful step, and second-opinion gates for expensive design decisions
+7. **Design acceptance criteria** — accessibility and state matrices treated as requirements, not late polish
 
 ---
 
@@ -102,6 +105,42 @@ Please identify:
 For Codex users with Claude Code installed, the lightweight version is: after the API or architecture design is drafted, ask for a second opinion with `claude -p`. Treat the output as critique, not authority: incorporate useful feedback, reject mismatched advice explicitly, then continue through implementation and validation.
 
 Never send secrets, credentials, private production data, or unnecessary proprietary context to an external reviewer. If external review is unavailable or unsafe, run the same checklist as an internal red-team pass and say so.
+
+### Accessibility + State Matrices
+
+For UI work, the acceptance criteria should include two design-quality gates before implementation starts:
+
+1. **Accessibility bar** — the interface must be usable by keyboard, screen reader, reduced-motion users, high-contrast users, and users who cannot rely on color alone.
+2. **State matrix** — the page or component must define its meaningful states before the agent implements the happy path.
+
+Use WCAG 2.2 as the baseline accessibility reference. In practice, bake these checks into issues and PRs:
+
+- Keyboard navigation reaches every interactive control in a sensible order.
+- Focus states are visible and not color-only.
+- Controls have accessible names; icons-only buttons have labels.
+- Form errors identify the field, describe the problem, and remain available to assistive tech.
+- Text/background contrast meets the relevant WCAG level for normal and large text.
+- Meaning is never conveyed by color alone.
+- Touch/click targets are large enough for reliable input.
+- Motion respects `prefers-reduced-motion`.
+- Content survives zoom, text resizing, and narrow/mobile widths.
+
+For state matrices, write the rows down explicitly. A useful default:
+
+| State | What To Decide |
+|---|---|
+| Loading | Skeleton, spinner, optimistic shell, or no placeholder |
+| Empty | What useful next action or explanation appears |
+| Partial data | What remains trustworthy and what is hidden or caveated |
+| Error | Recovery path, retry, support/debug detail, and safe copy |
+| Offline / slow network | Whether stale data, retry, or blocking UI is right |
+| Disabled / permission denied | Why action is unavailable and how to resolve it |
+| Long text / many items | Wrapping, truncation, pagination, virtualization, overflow |
+| Mobile / narrow viewport | Navigation, density, sticky controls, content priority |
+| Reduced motion | Crossfade or instant equivalent for animated flows |
+| High contrast / forced colors | Borders, focus, icons, charts, and status indicators still read |
+
+The state matrix prevents the common agent failure mode where a UI looks good with perfect data and quietly falls apart in production.
 
 ### The "Recent Misses" log
 
@@ -359,6 +398,12 @@ What should this issue not include?
 ## Test Expectations
 What tests should be added or updated?
 
+## Accessibility Acceptance
+Keyboard, focus, labels, contrast, reduced motion, target size, and no color-only meaning.
+
+## State Matrix
+Loading / empty / partial / error / offline or slow network / disabled or permission denied / long text / many items / mobile / reduced motion / high contrast.
+
 ## Architecture Impact
 Does this affect domain boundaries, adapters, schemas, CI, or docs?
 
@@ -392,6 +437,8 @@ What is intentionally out of scope?
 - [ ] Unit/application tests
 - [ ] Build
 - [ ] Foundational E2E, if relevant
+- [ ] Accessibility checks, if UI changed
+- [ ] State matrix covered, if UI changed
 
 Commands run:
 ```text
@@ -401,6 +448,15 @@ Commands run:
 - [ ] This follows `docs/architecture.md`
 - [ ] Architecture docs were updated, if architecture changed
 - [ ] No domain/application/infrastructure boundary violations were introduced
+
+## Accessibility And States
+- [ ] Keyboard flow works
+- [ ] Focus states are visible
+- [ ] Interactive controls have accessible names
+- [ ] Errors are associated with fields and recoverable
+- [ ] Contrast and target sizes meet the project bar
+- [ ] Reduced-motion and mobile/narrow states were considered
+- [ ] Loading, empty, partial, error, disabled/permission, and long-content states are covered or explicitly non-applicable
 
 ## Type Safety
 - [ ] Runtime data is parsed or narrowed instead of cast
@@ -602,8 +658,9 @@ If you're starting a new repo and want the highest-leverage subset:
 2. **`docs/architecture.md` as required reading** — kills the "let me just cast this real quick" instinct
 3. **Issue + PR templates that mirror each other** — a 30-minute setup that pays back forever
 4. **A senior engineering loop in `AGENTS.md` or `.agents/skills/`** — prevents "it runs" from masquerading as "it meets the bar"
-5. **Conventional Commits enforced by commit-msg hook + CI on PR titles** — your future self doing `git blame` will thank you
-6. **Lefthook with red-green + type-escape + format checks** — fast feedback before commit
+5. **Accessibility acceptance + state matrix fields in issue/PR templates** — stops happy-path UI from shipping as complete
+6. **Conventional Commits enforced by commit-msg hook + CI on PR titles** — your future self doing `git blame` will thank you
+7. **Lefthook with red-green + type-escape + format checks** — fast feedback before commit
 
 Skip-for-later (good ideas but bigger lift):
 
@@ -629,3 +686,4 @@ The genius of this setup isn't any single piece — it's that **every rule appea
 - [Theo on a Codex first loop](https://x.com/theo/status/2068595585121484866)
 - [Vox on senior-agent prompts and goals](https://x.com/Voxyz_ai/status/2067237707483337118)
 - [jakubkrehel/make-interfaces-feel-better](https://github.com/jakubkrehel/make-interfaces-feel-better)
+- [W3C WCAG overview](https://www.w3.org/WAI/standards-guidelines/wcag/)
