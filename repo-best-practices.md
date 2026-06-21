@@ -1,8 +1,10 @@
 # Repo-as-a-System: Best Practices for Agent-Driven Development
 
-> **Source:** Every pattern in this document comes from [**lightstrikelabs/repo-analyzer-green**](https://github.com/lightstrikelabs/repo-analyzer-green). All credit for the patterns, examples, file structures, and design decisions goes to that repo's authors. This document is my synthesis and commentary — the originals are the canonical reference.
+> **Source:** The core repo-as-system patterns in this document come from [**lightstrikelabs/repo-analyzer-green**](https://github.com/lightstrikelabs/repo-analyzer-green). All credit for those patterns, examples, file structures, and design decisions goes to that repo's authors. This document is my synthesis and commentary — the originals are the canonical reference.
 >
 > Direct sources used: [AGENTS.md](https://github.com/lightstrikelabs/repo-analyzer-green/blob/main/AGENTS.md) · [docs/architecture.md](https://github.com/lightstrikelabs/repo-analyzer-green/blob/main/docs/architecture.md) · [docs/skills.md](https://github.com/lightstrikelabs/repo-analyzer-green/blob/main/docs/skills.md) · [docs/agent-compat.md](https://github.com/lightstrikelabs/repo-analyzer-green/blob/main/docs/agent-compat.md) · [docs/commit-messages.md](https://github.com/lightstrikelabs/repo-analyzer-green/blob/main/docs/commit-messages.md) · [.github/ISSUE_TEMPLATE/development-slice.md](https://github.com/lightstrikelabs/repo-analyzer-green/blob/main/.github/ISSUE_TEMPLATE/development-slice.md) · [.github/pull_request_template.md](https://github.com/lightstrikelabs/repo-analyzer-green/blob/main/.github/pull_request_template.md) · [.github/workflows/ci.yml](https://github.com/lightstrikelabs/repo-analyzer-green/blob/main/.github/workflows/ci.yml) · [lefthook.yml](https://github.com/lightstrikelabs/repo-analyzer-green/blob/main/lefthook.yml) · [.claude/settings.json](https://github.com/lightstrikelabs/repo-analyzer-green/blob/main/.claude/settings.json) · [.agents/skills/](https://github.com/lightstrikelabs/repo-analyzer-green/tree/main/.agents/skills)
+>
+> Added senior-loop sources: [Theo on a Codex first loop](https://x.com/theo/status/2068595585121484866) · [Vox on senior-agent prompts and goals](https://x.com/Voxyz_ai/status/2067237707483337118). The section below is a synthesis of the operating pattern, not a transcript.
 
 A portable playbook distilled from [lightstrikelabs/repo-analyzer-green](https://github.com/lightstrikelabs/repo-analyzer-green). Drop the patterns here into any new repo and you get a setup where humans and coding agents (Claude Code, Codex CLI, pi) can collaborate with mechanical guardrails, traceable history, and a real architecture doc.
 
@@ -12,13 +14,14 @@ A portable playbook distilled from [lightstrikelabs/repo-analyzer-green](https:/
 
 Most repos treat process as documentation that nobody reads. This repo treats it as **layered enforcement** — the same rule appears in (1) docs, (2) chat-visible artifacts the agent must produce, (3) local hooks, and (4) CI/branch protection. When the agent forgets, the hook blocks the edit. When the hook is skipped, CI blocks the merge. When CI is wrong, a "Recent Misses" log captures the failure and tightens the rule.
 
-Five components do all the work:
+Six components do all the work:
 
 1. **`AGENTS.md`** — agent constitution, with a hard "Before Any Code" gate
 2. **`docs/architecture.md`** — required reading, single source of architectural truth
 3. **`.agents/skills/`** — shared skills (`distill-issue`, `start-slice`, `preflight`)
 4. **Three-surface red-green enforcement** — pre-tool hook, pre-commit hook, CI
 5. **Issue + PR templates that mirror each other** — same fields, same shape
+6. **A senior engineering loop** — goal-driven execution, real validation after each meaningful step, and second-opinion gates for expensive design decisions
 
 ---
 
@@ -37,6 +40,68 @@ The single highest-value pattern. Before editing any non-test file, the agent mu
 5. **Architecture/plan check** — one-line confirmation that `docs/architecture.md` and `docs/development-plan.md` were skimmed for conflicts.
 
 If any are missing, **stop and ask**. The chat transcript itself is the audit trail — reviewers can scroll back and see all five.
+
+### The Senior Engineering Loop
+
+The "Before Any Code" gate says when the agent is allowed to start. The senior loop says how it should keep going once the gate is open.
+
+Put this in `AGENTS.md` or a shared `.agents/skills/senior-engineering-loop/` skill:
+
+```text
+Goal: {the task or agreed spec}
+
+Continue until the architecture, implementation, tests, review, and final result meet the bar, not merely until the code runs. After every meaningful step, validate real behavior with the best available evidence.
+```
+
+Operationally, that means:
+
+1. **Name the success bar** — expected behavior, non-goals, constraints, and what "done" means.
+2. **Build real context first** — inspect relevant files, tests, logs, UI states, API contracts, schemas, and prior docs before editing.
+3. **Pick the loop profile** — build, debug, refactor, performance, UI, API, or broad end-to-end work.
+4. **Plan proportional to risk** — a tiny docs fix needs almost no ceremony; an API, migration, security boundary, or architecture change needs a visible plan.
+5. **Implement in coherent slices** — preserve local conventions and avoid unrelated cleanup.
+6. **Validate the real thing after each meaningful step** — unit tests, integration tests, browser flows, curl scripts, screenshots, logs, or benchmarks, depending on the work.
+7. **Review and iterate** — check edge cases, maintainability, security, performance, accessibility, and user-facing behavior before finalizing.
+
+Loop profiles worth encoding:
+
+| Profile | Use When | Extra Standard |
+|---|---|---|
+| Baseline goal loop | Any non-trivial engineering task | Keep going until result and validation meet the stated bar |
+| Parallel end-to-end loop | Large tasks with independent tracks | Split context mapping, implementation planning, verification, and review when tools allow |
+| Production build loop | Shipping a feature, service, app, or tool | Cover requirements, edge cases, architecture, implementation, tests, and handoff |
+| Unfamiliar repo refactor loop | Inheriting or cleaning a codebase | Map architecture/data flow first; refactor only where payoff is real |
+| Senior debugging loop | Bugs, regressions, failing tests, incidents | Reproduce, isolate root cause, fix cause not symptom, add regression coverage |
+| Performance loop | Speed, memory, scalability, slow UI/API | Define metric, measure baseline, optimize the hot path, re-measure |
+| Production UI loop | Reusable components or app surfaces | Cover loading/empty/error states, responsiveness, keyboard/focus, labels, accessibility |
+| Publishable API loop | Routes, webhooks, SDK-facing APIs, service boundaries | Cover validation, auth, error model, idempotency, pagination/rate limits where relevant |
+
+### The Second-Opinion Gate
+
+For high-cost design decisions, add a reviewer loop before implementation. This is especially useful after designing an API, data model, migration, security boundary, or large refactor.
+
+If an external reviewer is available and safe to use, run a skeptical review with only the necessary non-secret context:
+
+```text
+Act as a skeptical senior engineering reviewer. Review this design before implementation.
+
+Goal:
+{user goal}
+
+Current design:
+{architecture, API routes, data model, boundaries, assumptions}
+
+Please identify:
+1. correctness or architecture risks
+2. missing edge cases
+3. simpler alternatives
+4. validation and test gaps
+5. the highest-impact changes before implementation
+```
+
+For Codex users with Claude Code installed, the lightweight version is: after the API or architecture design is drafted, ask for a second opinion with `claude -p`. Treat the output as critique, not authority: incorporate useful feedback, reject mismatched advice explicitly, then continue through implementation and validation.
+
+Never send secrets, credentials, private production data, or unnecessary proprietary context to an external reviewer. If external review is unavailable or unsafe, run the same checklist as an internal red-team pass and say so.
 
 ### The "Recent Misses" log
 
@@ -143,6 +208,19 @@ Audits a fresh clone for fork-day setup gaps:
 | main branch protection | `gh api .../branches/main/protection` returns 200 |
 
 Each check returns `pass` / `fail` / `skip` with a remediation hint. Output goes straight into chat as the "Before Any Code" item-3 artifact. Exit `1` if anything fails.
+
+### A fourth skill worth adding: `senior-engineering-loop`
+
+The three source skills start the slice. Add `senior-engineering-loop` to govern the work inside the slice:
+
+```markdown
+---
+name: senior-engineering-loop
+description: Goal-driven senior engineering workflow. Use for end-to-end goals, production-grade implementation, unfamiliar repo refactors, debugging, performance optimization, UI components, publishable APIs, architecture/design review, and second-opinion gates.
+---
+```
+
+Keep the body short: the operating loop, the loop profiles above, and the second-opinion gate. Put detailed prompt variants in `references/loop-catalog.md` so the agent only loads them when needed.
 
 ### SKILL.md frontmatter rules
 
@@ -481,6 +559,7 @@ Here's how a feature gets built in this repo. This is the rhythm worth importing
    → only THEN can the PreToolUse hook be satisfied for non-test edits
    ↓
 6. Agent implements the slice
+   → follows the senior engineering loop: context → design → implementation slice → real validation → review
    → red-green-gate.ts allows non-test edits because colocated test was just edited
    → type-escape, barrel-files, lint all run on commit
    ↓
@@ -522,8 +601,9 @@ If you're starting a new repo and want the highest-leverage subset:
 1. **`AGENTS.md` with the "Before Any Code" five-artifact gate** — this alone catches 80% of the pathological agent failure modes
 2. **`docs/architecture.md` as required reading** — kills the "let me just cast this real quick" instinct
 3. **Issue + PR templates that mirror each other** — a 30-minute setup that pays back forever
-4. **Conventional Commits enforced by commit-msg hook + CI on PR titles** — your future self doing `git blame` will thank you
-5. **Lefthook with red-green + type-escape + format checks** — fast feedback before commit
+4. **A senior engineering loop in `AGENTS.md` or `.agents/skills/`** — prevents "it runs" from masquerading as "it meets the bar"
+5. **Conventional Commits enforced by commit-msg hook + CI on PR titles** — your future self doing `git blame` will thank you
+6. **Lefthook with red-green + type-escape + format checks** — fast feedback before commit
 
 Skip-for-later (good ideas but bigger lift):
 
@@ -545,3 +625,5 @@ The genius of this setup isn't any single piece — it's that **every rule appea
 - [docs/agent-compat.md](https://github.com/lightstrikelabs/repo-analyzer-green/blob/main/docs/agent-compat.md)
 - [docs/commit-messages.md](https://github.com/lightstrikelabs/repo-analyzer-green/blob/main/docs/commit-messages.md)
 - [Agent Skills specification](https://agentskills.io/specification)
+- [Theo on a Codex first loop](https://x.com/theo/status/2068595585121484866)
+- [Vox on senior-agent prompts and goals](https://x.com/Voxyz_ai/status/2067237707483337118)

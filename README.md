@@ -12,6 +12,7 @@ Covers:
 - The `AGENTS.md` "Before Any Code" five-artifact gate
 - `docs/architecture.md` as required reading
 - Cross-agent skill layout (`.agents/skills/` with symlinks for Claude/Codex/pi)
+- A senior engineering loop for goal-driven execution, real validation after each meaningful step, and second-opinion gates before high-cost designs
 - Three-surface red-green enforcement (PreToolUse hook + lefthook + CI)
 - Issue + PR templates that mirror each other
 - Conventional Commits enforcement at three layers
@@ -56,7 +57,7 @@ The bridge to the other two docs: **most workflow steps already produce text art
 
 ## How to Use These
 
-If you're starting fresh: read **repo-best-practices.md** first, adopt the AGENTS.md + slice workflow + hooks, then layer on the skills from **additional-engineering-skills.md** as you hit the situations they solve (alignment, debugging, design exploration). Once the workflow is humming, read **html-as-medium.md** to upgrade the artifacts each step produces.
+If you're starting fresh: read **repo-best-practices.md** first, adopt the AGENTS.md + slice workflow + hooks, and add the senior engineering loop to keep agents working past "it runs" toward architecture, implementation, validation, and review. Then layer on the skills from **additional-engineering-skills.md** as you hit the situations they solve (alignment, debugging, design exploration). Once the workflow is humming, read **html-as-medium.md** to upgrade the artifacts each step produces.
 
 If you already have a workflow: skip to **additional-engineering-skills.md** and pick the highest-leverage additions:
 
@@ -72,6 +73,7 @@ Then revisit **html-as-medium.md** for the three highest-leverage render upgrade
 - [lightstrikelabs/repo-analyzer-green](https://github.com/lightstrikelabs/repo-analyzer-green) — the integrated framework
 - [mattpocock/skills](https://github.com/mattpocock/skills) — the composable skills
 - [Thariq Shihipar — HTML Effectiveness](https://thariqs.github.io/html-effectiveness/) — HTML as the agent's output medium
+- [Theo on a Codex first loop](https://x.com/theo/status/2068595585121484866) and [Vox on senior-agent prompts](https://x.com/Voxyz_ai/status/2067237707483337118) — goal loops and second-opinion gates
 
 ## License
 
