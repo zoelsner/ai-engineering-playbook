@@ -129,6 +129,8 @@ The triage board is a direct upgrade to Matt's `/triage` skill. Today, `/triage`
 | `/diagnose` Phase 4 instrumentation results | Annotated flowchart of the failing path |
 | `/prototype` (UI question) | Visual design directions; clickable flow |
 | `/prototype` (state question) | Custom editing interface that surfaces state |
+| UI state matrix | Component state contact sheet |
+| Accessibility acceptance | Keyboard/focus/contrast evidence report |
 | `/triage` board | Ticket triage editor with export |
 | `/improve-codebase-architecture` candidates | Module map showing shallow vs deep modules |
 | Weekly recap, post-mortem | Status report, incident timeline |
@@ -165,6 +167,7 @@ A few things to standardize if you adopt this seriously:
 - **Single-file HTML, no build step.** Self-contained, openable from disk, pasteable into a chat as an attachment. Same constraint as Thariq's demos.
 - **Always add an export button** for any HTML that captures user decisions. The output of the editor needs to flow back into the agent — JSON, markdown, or a diff.
 - **Render in `docs/artifacts/` (or similar) and `.gitignore` it by default.** These are conversational artifacts, not source of truth. Promote individual ones to `docs/` if they earn it (a real architecture diagram, the actual design system).
+- **Avoid secrets and unnecessary external scripts.** HTML artifacts are easy to share, so keep credentials, private data, and surprise network calls out by default.
 - **Cite the agent inline.** Matt's AI-disclaimer convention applies — if the artifact will be shared, say what produced it.
 
 ---

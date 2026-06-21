@@ -1,0 +1,13 @@
+accept = [200, 206, 429]
+max_retries = 2
+timeout = 20
+user_agent = "Mozilla/5.0 ai-engineering-starter-kit link checker"
+
+exclude = [
+  "^https://x\\.com/",
+  "^https://www\\.amazon\\.com/"
+]
+
+exclude_path = [
+  ".git"
+]

@@ -10,6 +10,8 @@
 
 A portable playbook distilled from [lightstrikelabs/repo-analyzer-green](https://github.com/lightstrikelabs/repo-analyzer-green). Drop the patterns here into any new repo and you get a setup where humans and coding agents (Claude Code, Codex CLI, pi) can collaborate with mechanical guardrails, traceable history, and a real architecture doc.
 
+This repo now includes a copyable [`starter-kit/`](starter-kit/) with the core files described below: `AGENTS.md`, `CONTEXT.md`, architecture docs, issue/PR templates, docs-quality CI, and a `senior-engineering-loop` skill.
+
 ---
 
 ## The Big Idea
@@ -43,6 +45,18 @@ The single highest-value pattern. Before editing any non-test file, the agent mu
 5. **Architecture/plan check** — one-line confirmation that `docs/architecture.md` and `docs/development-plan.md` were skimmed for conflicts.
 
 If any are missing, **stop and ask**. The chat transcript itself is the audit trail — reviewers can scroll back and see all five.
+
+### The docs-only path
+
+The red-test gate is for product/code changes. Docs-only changes still need discipline, but they need a different evidence trail:
+
+1. **Scope** — name the docs being changed and the intended reader.
+2. **Source** — list upstream sources or say "no external source."
+3. **Consistency** — check README, templates, and related docs for the same update.
+4. **Quality** — run markdown and link checks when available.
+5. **Review** — scan for stale counts, contradictions, broken relative links, and unclear reuse/license claims.
+
+This prevents the framework from rejecting its own maintenance work while still keeping documentation changes reviewable.
 
 ### The Senior Engineering Loop
 
@@ -141,6 +155,15 @@ For state matrices, write the rows down explicitly. A useful default:
 | High contrast / forced colors | Borders, focus, icons, charts, and status indicators still read |
 
 The state matrix prevents the common agent failure mode where a UI looks good with perfect data and quietly falls apart in production.
+
+Ask for evidence that matches the repo:
+
+- Desktop and mobile screenshots for changed UI.
+- Keyboard-only walkthrough notes.
+- Accessibility scan output from axe, Playwright, Storybook, or the project's chosen tooling.
+- Storybook stories or an HTML contact sheet for meaningful states.
+- Reduced-motion and high-contrast checks when motion or color carries meaning.
+- A `Before` / `After` polish table when running `make-interfaces-feel-better`.
 
 ### The "Recent Misses" log
 
@@ -371,6 +394,8 @@ The overlap is the point. Every agent + every commit path hits the same gate.
 ---
 
 ## 5. Issue + PR Templates That Mirror Each Other
+
+Copyable starter versions live in [`starter-kit/.github/ISSUE_TEMPLATE/development-slice.md`](starter-kit/.github/ISSUE_TEMPLATE/development-slice.md) and [`starter-kit/.github/pull_request_template.md`](starter-kit/.github/pull_request_template.md).
 
 ### `.github/ISSUE_TEMPLATE/development-slice.md`
 
@@ -668,7 +693,7 @@ Skip-for-later (good ideas but bigger lift):
 - Cross-agent skill symlinks (only matters if you actually use multiple agents)
 - The `start-slice` worktree dance (overkill for solo work)
 - Foundational E2E + Playwright (only when the product workflow is stable enough to be worth protecting)
-- `make-interfaces-feel-better` as a frontend polish skill for UI-heavy repos
+- Full Impeccable adoption (useful when you want a broader design operating system, not just polish)
 
 The genius of this setup isn't any single piece — it's that **every rule appears in the place where the rule can be enforced**, and the docs explain *why* so future agents (and humans) don't re-litigate the basics.
 

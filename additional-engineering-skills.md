@@ -22,7 +22,7 @@ The philosophical contrast is worth naming up front. From Matt's README:
 
 > Approaches like GSD, BMAD, and Spec-Kit try to help by owning the process. But while doing so, they take away your control and make bugs in the process hard to resolve. These skills are designed to be small, easy to adapt, and composable.
 
-So while lightstrikelabs says "follow the slice workflow," Matt says "here are eleven sharp tools, use whichever fits." Both are valuable. The lightstrikelabs approach gives you guardrails when you're building in a team. Matt's gives you precision tools when you're solo or want to opt into one practice without buying the rest.
+So while lightstrikelabs says "follow the slice workflow," the composable-skills approach says "here are twelve sharp tools, use whichever fits." Both are valuable. The lightstrikelabs approach gives you guardrails when you're building in a team. The composable approach gives you precision tools when you're solo or want to opt into one practice without buying the rest.
 
 ---
 
@@ -352,6 +352,8 @@ npx skills add jakubkrehel/make-interfaces-feel-better
 ```
 
 If you want to mix-and-match with the lightstrikelabs setup: keep AGENTS.md as your constitution and the slice workflow as your rhythm, but add `/grill-with-docs`, `/diagnose`, `/zoom-out`, `make-interfaces-feel-better`, and a CONTEXT.md to any repo where domain language is starting to drift. They compose cleanly.
+
+For frontend/design work, use [design-quality-stack.md](design-quality-stack.md) to decide whether you need a state matrix, an accessibility evidence pass, `make-interfaces-feel-better`, an HTML artifact, or a fuller Impeccable-style workflow.
 
 ---
 
