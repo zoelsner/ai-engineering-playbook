@@ -38,7 +38,19 @@ Use the closest profile from `.agents/skills/senior-engineering-loop/references/
 
 ## Second-Opinion Gate
 
-Before implementing high-cost API, architecture, data model, migration, security, or large refactor decisions, get a skeptical second opinion when safe. External review must never include secrets, credentials, private production data, or unnecessary proprietary context.
+Default model:
+
+- Codex is the driver for context gathering, planning, implementation, validation, and final judgment.
+- Claude is the reviewer when a second opinion would raise quality.
+- The user stays accountable for the decision. Reviewer output is critique, not authority.
+
+Before implementing high-cost API, architecture, data model, migration, security, or large refactor decisions, get a skeptical second opinion when safe. Also use `claude -p` to pressure-test complex feature plans, broad loops, and post-implementation code review summaries.
+
+Useful checkpoints:
+
+1. Plan pressure test before implementation.
+2. Loop pressure test when the work is broad or fuzzy.
+3. Code review pass after implementation and local validation.
 
 If external review is unavailable or unsafe, run the same critique internally and state that it was internal.
 

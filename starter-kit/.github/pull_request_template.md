@@ -9,6 +9,7 @@ Closes #<issue-number>
 - [ ] Preflight or setup check posted
 - [ ] Failing test/reproduction observed before non-test product code edits, or docs-only path used
 - [ ] Architecture/plan check against `docs/architecture.md` and `docs/development-plan.md`
+- [ ] `claude -p` second-opinion review captured for high-cost plans/features/code, or explicitly N/A
 
 ## Scope
 

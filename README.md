@@ -18,7 +18,7 @@ Covers:
 - The `AGENTS.md` "Before Any Code" five-artifact gate
 - `docs/architecture.md` as required reading
 - Cross-agent skill layout (`.agents/skills/` with symlinks for Claude/Codex/pi)
-- A senior engineering loop for goal-driven execution, real validation after each meaningful step, and second-opinion gates before high-cost designs
+- A senior engineering loop for goal-driven execution, Codex-as-driver implementation, real validation after each meaningful step, and `claude -p` second-opinion gates before high-cost designs
 - Accessibility acceptance criteria and UI state matrices in issue/PR templates
 - Three-surface red-green enforcement (PreToolUse hook + lefthook + CI)
 - Issue + PR templates that mirror each other
@@ -84,7 +84,7 @@ The bridge to the other two docs: **most workflow steps already produce text art
 
 ## How to Use These
 
-If you're starting fresh: copy **starter-kit/** into the target repo, fill in the placeholders, then read **repo-best-practices.md** to understand the AGENTS.md + slice workflow + hooks. Add the senior engineering loop, and make accessibility/state matrices part of every UI issue and PR. Then layer on the skills from **additional-engineering-skills.md** as you hit the situations they solve (alignment, debugging, design exploration). For UI work, use **design-quality-stack.md** as the routing guide. Once the workflow is humming, read **html-as-medium.md** to upgrade the artifacts each step produces.
+If you're starting fresh: copy **starter-kit/** into the target repo, fill in the placeholders, then read **repo-best-practices.md** to understand the AGENTS.md + slice workflow + hooks. Add the senior engineering loop, use Codex as the driver for context, implementation, validation, and final judgment, and use `claude -p` as a second-opinion reviewer when pressure-testing plans, features, code, or loops. Make accessibility/state matrices part of every UI issue and PR. Then layer on the skills from **additional-engineering-skills.md** as you hit the situations they solve (alignment, debugging, design exploration). For UI work, use **design-quality-stack.md** as the routing guide. Once the workflow is humming, read **html-as-medium.md** to upgrade the artifacts each step produces.
 
 If you already have a workflow: skip to **additional-engineering-skills.md** and pick the highest-leverage additions:
 

@@ -62,6 +62,12 @@ This prevents the framework from rejecting its own maintenance work while still 
 
 The "Before Any Code" gate says when the agent is allowed to start. The senior loop says how it should keep going once the gate is open.
 
+For Codex-first work, make the collaboration model explicit:
+
+- **Codex is the driver** — it owns repo context, plan synthesis, implementation, validation, and the final call on what changes.
+- **Claude is the reviewer** — use `claude -p` for skeptical second opinions on plans, feature shape, code, tests, and loop quality.
+- **The user stays accountable** — external reviewer output is critique, not authority. Codex should summarize what it accepted, what it rejected, and why.
+
 Put this in `AGENTS.md` or a shared `.agents/skills/senior-engineering-loop/` skill:
 
 ```text
@@ -97,6 +103,12 @@ Loop profiles worth encoding:
 
 For high-cost design decisions, add a reviewer loop before implementation. This is especially useful after designing an API, data model, migration, security boundary, or large refactor.
 
+The same pattern is also useful for feature and code quality:
+
+1. **Plan pressure test** — after Codex drafts the plan but before implementation, ask Claude to find missing edge cases, simpler paths, and validation gaps.
+2. **Loop pressure test** — when the work is broad or fuzzy, ask Claude whether the execution loop has the right checkpoints and evidence.
+3. **Code review pass** — after Codex implements and validates, ask Claude to review the diff or summary for correctness, maintainability, security, accessibility, and test gaps.
+
 If an external reviewer is available and safe to use, run a skeptical review with only the necessary non-secret context:
 
 ```text
@@ -116,7 +128,7 @@ Please identify:
 5. the highest-impact changes before implementation
 ```
 
-For Codex users with Claude Code installed, the lightweight version is: after the API or architecture design is drafted, ask for a second opinion with `claude -p`. Treat the output as critique, not authority: incorporate useful feedback, reject mismatched advice explicitly, then continue through implementation and validation.
+For Codex users with Claude Code installed, the lightweight version is: after Codex drafts a plan, loop, feature design, or code review summary, ask for a second opinion with `claude -p`. Treat the output as critique, not authority: incorporate useful feedback, reject mismatched advice explicitly, then continue through implementation and validation.
 
 Never send secrets, credentials, private production data, or unnecessary proprietary context to an external reviewer. If external review is unavailable or unsafe, run the same checklist as an internal red-team pass and say so.
 
@@ -448,6 +460,7 @@ Closes #<issue-number>
 - [ ] Preflight output
 - [ ] Failing test (RED) observed before any non-test edit
 - [ ] Architecture/plan check against `docs/architecture.md`
+- [ ] `claude -p` second-opinion review captured for high-cost plans/features/code, or explicitly N/A
 
 ## Scope
 What coherent slice does this PR complete?

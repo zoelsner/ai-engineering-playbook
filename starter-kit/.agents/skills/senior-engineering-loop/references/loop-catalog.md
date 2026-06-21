@@ -60,6 +60,8 @@ Cover resource model, routes, validation, authentication, authorization, idempot
 
 ## Second-Opinion Review Loop
 
-Use after design and before implementation for high-impact API, architecture, migration, security, or refactor decisions.
+Use after design and before implementation for high-impact API, architecture, migration, security, or refactor decisions. Also use when pressure-testing a complex feature plan, a broad execution loop, or a post-implementation code review.
+
+Codex remains the driver. Claude, via `claude -p`, is the reviewer when available and safe. Incorporate useful critique, reject mismatched advice, then implement, validate, or revise the loop.
 
 Never send secrets, credentials, private production data, or unnecessary proprietary context to an external reviewer.
