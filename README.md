@@ -23,9 +23,9 @@ This is the **integrated process framework** — adopt the whole thing, get a sy
 
 ### [🛠️ additional-engineering-skills.md](./additional-engineering-skills.md)
 
-A complement focused on **small composable skills** that work in any repo regardless of whether you've adopted the integrated framework above. Distilled from [mattpocock/skills](https://github.com/mattpocock/skills) ("Skills for Real Engineers").
+A complement focused on **small composable skills** that work in any repo regardless of whether you've adopted the integrated framework above. Mostly distilled from [mattpocock/skills](https://github.com/mattpocock/skills) ("Skills for Real Engineers"), plus Jakub Krehel's `make-interfaces-feel-better` frontend polish skill.
 
-Covers eleven approaches the integrated framework doesn't have:
+Covers twelve approaches the integrated framework doesn't have:
 - `CONTEXT.md` as a shared-language doc (domain glossary as a first-class artifact)
 - `/grill-with-docs` — interview-before-build that updates docs/ADRs inline
 - ADR triggers (hard-to-reverse + surprising-without-context + real trade-off)
@@ -33,6 +33,7 @@ Covers eleven approaches the integrated framework doesn't have:
 - `/zoom-out` — one-line skill that forces system-map perspective
 - `/improve-codebase-architecture` — periodic preventive design pass against AI-accelerated entropy
 - `/prototype` — throwaway code that answers ONE question, with six rules to keep it from becoming production debt
+- `make-interfaces-feel-better` — frontend polish checks for typography, surfaces, motion, hit areas, and transition performance
 - `/triage` as a state machine + `.out-of-scope/` knowledge base for past rejections
 - `/to-prd` vs `/distill-issue` — synthesis vs gathering, both useful
 - The setup-skill bootstrap pattern for skills that share config
@@ -65,6 +66,7 @@ If you already have a workflow: skip to **additional-engineering-skills.md** and
 2. `/grill-with-docs` for alignment before non-trivial work
 3. `/diagnose` for disciplined debugging
 4. `/zoom-out` to reset agent context when it tunnels
+5. `make-interfaces-feel-better` for frontend-heavy repos where "feels off" needs a concrete polish checklist
 
 Then revisit **html-as-medium.md** for the three highest-leverage render upgrades: PR writeups as HTML, module maps as boxes-and-arrows, and visual design directions rendered side-by-side instead of described.
 
@@ -72,6 +74,7 @@ Then revisit **html-as-medium.md** for the three highest-leverage render upgrade
 
 - [lightstrikelabs/repo-analyzer-green](https://github.com/lightstrikelabs/repo-analyzer-green) — the integrated framework
 - [mattpocock/skills](https://github.com/mattpocock/skills) — the composable skills
+- [jakubkrehel/make-interfaces-feel-better](https://github.com/jakubkrehel/make-interfaces-feel-better) — frontend UI polish skill
 - [Thariq Shihipar — HTML Effectiveness](https://thariqs.github.io/html-effectiveness/) — HTML as the agent's output medium
 - [Theo on a Codex first loop](https://x.com/theo/status/2068595585121484866) and [Vox on senior-agent prompts](https://x.com/Voxyz_ai/status/2067237707483337118) — goal loops and second-opinion gates
 

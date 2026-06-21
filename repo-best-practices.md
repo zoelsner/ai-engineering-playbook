@@ -611,6 +611,7 @@ Skip-for-later (good ideas but bigger lift):
 - Cross-agent skill symlinks (only matters if you actually use multiple agents)
 - The `start-slice` worktree dance (overkill for solo work)
 - Foundational E2E + Playwright (only when the product workflow is stable enough to be worth protecting)
+- `make-interfaces-feel-better` as a frontend polish skill for UI-heavy repos
 
 The genius of this setup isn't any single piece — it's that **every rule appears in the place where the rule can be enforced**, and the docs explain *why* so future agents (and humans) don't re-litigate the basics.
 
@@ -627,3 +628,4 @@ The genius of this setup isn't any single piece — it's that **every rule appea
 - [Agent Skills specification](https://agentskills.io/specification)
 - [Theo on a Codex first loop](https://x.com/theo/status/2068595585121484866)
 - [Vox on senior-agent prompts and goals](https://x.com/Voxyz_ai/status/2067237707483337118)
+- [jakubkrehel/make-interfaces-feel-better](https://github.com/jakubkrehel/make-interfaces-feel-better)

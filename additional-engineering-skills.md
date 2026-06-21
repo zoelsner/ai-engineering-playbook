@@ -1,12 +1,14 @@
 # Additional Engineering Skills & Approaches
 
-> **Source:** Every skill, pattern, and quote in this document comes from [**mattpocock/skills**](https://github.com/mattpocock/skills) ("Skills for Real Engineers") by [Matt Pocock](https://github.com/mattpocock). All credit for the skills, methodologies, and engineering insights goes to him. This document is my synthesis and commentary — the originals are the canonical reference.
+> **Source:** The core engineering skills, patterns, and quotes in this document come from [**mattpocock/skills**](https://github.com/mattpocock/skills) ("Skills for Real Engineers") by [Matt Pocock](https://github.com/mattpocock). The frontend polish skill comes from [**jakubkrehel/make-interfaces-feel-better**](https://github.com/jakubkrehel/make-interfaces-feel-better), based on Jakub Krehel's article [Details that make interfaces feel better](https://jakub.kr/writing/details-that-make-interfaces-feel-better). All credit for the skills, methodologies, and engineering insights goes to the original authors. This document is my synthesis and commentary — the originals are the canonical reference.
 >
 > Direct sources used: [README.md](https://github.com/mattpocock/skills/blob/main/README.md) · [CONTEXT.md (example)](https://github.com/mattpocock/skills/blob/main/CONTEXT.md) · [grill-with-docs](https://github.com/mattpocock/skills/blob/main/skills/engineering/grill-with-docs/SKILL.md) · [diagnose](https://github.com/mattpocock/skills/blob/main/skills/engineering/diagnose/SKILL.md) · [zoom-out](https://github.com/mattpocock/skills/blob/main/skills/engineering/zoom-out/SKILL.md) · [improve-codebase-architecture](https://github.com/mattpocock/skills/blob/main/skills/engineering/improve-codebase-architecture/SKILL.md) · [prototype](https://github.com/mattpocock/skills/blob/main/skills/engineering/prototype/SKILL.md) · [triage](https://github.com/mattpocock/skills/blob/main/skills/engineering/triage/SKILL.md) · [to-prd](https://github.com/mattpocock/skills/blob/main/skills/engineering/to-prd/SKILL.md)
 >
+> Frontend polish source used: [make-interfaces-feel-better](https://github.com/jakubkrehel/make-interfaces-feel-better) · [Details that make interfaces feel better](https://jakub.kr/writing/details-that-make-interfaces-feel-better)
+>
 > The lightstrikelabs comparisons in this document refer to [lightstrikelabs/repo-analyzer-green](https://github.com/lightstrikelabs/repo-analyzer-green) — see [repo-best-practices.md](repo-best-practices.md) for the full credits there.
 
-Companion to [repo-best-practices.md](repo-best-practices.md). Distilled from [mattpocock/skills](https://github.com/mattpocock/skills) ("Skills for Real Engineers"). The lightstrikelabs setup is a tightly integrated process framework. Matt's setup is the opposite: **small, composable skills you can pull in à la carte without buying a workflow**. Read together, they cover different muscles.
+Companion to [repo-best-practices.md](repo-best-practices.md). Mostly distilled from [mattpocock/skills](https://github.com/mattpocock/skills) ("Skills for Real Engineers"), with one frontend polish skill from [jakubkrehel/make-interfaces-feel-better](https://github.com/jakubkrehel/make-interfaces-feel-better). The lightstrikelabs setup is a tightly integrated process framework. These skills are the opposite: **small, composable tools you can pull in à la carte without buying a workflow**. Read together, they cover different muscles.
 
 ---
 
@@ -24,7 +26,7 @@ So while lightstrikelabs says "follow the slice workflow," Matt says "here are e
 
 ---
 
-## The Eleven New Approaches Worth Adding
+## The Twelve New Approaches Worth Adding
 
 ### 1. Grilling-Before-Building (`/grill-with-docs`)
 
@@ -261,6 +263,29 @@ If you build skills that depend on each other, this is the pattern: one bootstra
 
 Productivity hack. Not for everyone — some tasks benefit from prose explanations — but worth knowing about for long-running sessions where context is filling up. Activates an explicit mode rather than constantly fighting the model's verbosity.
 
+### 12. `make-interfaces-feel-better` — Frontend Polish Pass
+
+This is the frontend skill to run when a UI technically works but still feels a little unfinished. It encodes the small design-engineering details that compound into polish:
+
+- **Typography:** `text-wrap: balance` for headings, `text-wrap: pretty` for short-to-medium body text, root font smoothing, and `tabular-nums` for counters/timers/prices.
+- **Surfaces:** concentric border radius (`outer radius = inner radius + padding`), optical alignment for icons/asymmetric shapes, shadow rings instead of hard borders for depth, pure black/white image outlines, and minimum 40-44px hit areas.
+- **Animations:** CSS transitions for interruptible interactive states, keyframes only for one-shot staged sequences, split/staggered enter animations, softer exits, contextual icon transitions with opacity/scale/blur, and `scale(0.96)` press feedback.
+- **Performance:** no `transition: all`, explicit transition properties only, and `will-change` only for compositor-friendly properties when first-frame stutter is real.
+
+Install:
+
+```bash
+npx skills add jakubkrehel/make-interfaces-feel-better
+```
+
+Use it in three places:
+
+1. **Before implementation** when the slice includes reusable UI components, motion, empty/loading/error states, cards, buttons, dashboards, or dense product surfaces.
+2. **During review** as a polish checklist after the core behavior is working.
+3. **Before screenshots** so the agent checks optical alignment, motion, text wrapping, numbers, hit areas, and image depth before calling the UI done.
+
+The output convention is useful: report every polish change in markdown tables with **Before** and **After** columns, grouped by principle. That forces the agent to explain the design engineering diff instead of hand-waving "made it nicer."
+
 ---
 
 ## Cultural Details Worth Stealing
@@ -302,8 +327,9 @@ In rough priority order (highest leverage first):
 | 7 | **`/prototype` rules** when exploring design questions | Prototype shape ≠ implementation shape; throwaway-from-day-one |
 | 8 | **`.out-of-scope/` knowledge base** for triaged rejections | Long-term memory for "we already said no" |
 | 9 | **AI disclaimer convention** for AI-generated PR/issue comments | Transparency about agent participation |
-| 10 | **`/triage` state machine** if your tracker is chaotic | Most useful in mature/active repos |
-| 11 | **`/caveman` mode** for context-pressure long sessions | Niche but real |
+| 10 | **`make-interfaces-feel-better`** for frontend polish passes | Turns "feels off" into specific typography, surface, motion, and performance checks |
+| 11 | **`/triage` state machine** if your tracker is chaotic | Most useful in mature/active repos |
+| 12 | **`/caveman` mode** for context-pressure long sessions | Niche but real |
 
 The first four (CONTEXT.md, grill-with-docs, diagnose, zoom-out) are the highest leverage and lowest effort. Start there.
 
@@ -319,7 +345,13 @@ npx skills@latest add mattpocock/skills
 
 Then `/setup-matt-pocock-skills` to configure issue tracker + labels + doc location. You can pick a subset rather than all of them — they're designed to be independently usable.
 
-If you want to mix-and-match with the lightstrikelabs setup: keep AGENTS.md as your constitution and the slice workflow as your rhythm, but add `/grill-with-docs`, `/diagnose`, `/zoom-out`, and a CONTEXT.md to any repo where domain language is starting to drift. They compose cleanly.
+For frontend-heavy repos, also install Jakub Krehel's UI polish skill:
+
+```bash
+npx skills add jakubkrehel/make-interfaces-feel-better
+```
+
+If you want to mix-and-match with the lightstrikelabs setup: keep AGENTS.md as your constitution and the slice workflow as your rhythm, but add `/grill-with-docs`, `/diagnose`, `/zoom-out`, `make-interfaces-feel-better`, and a CONTEXT.md to any repo where domain language is starting to drift. They compose cleanly.
 
 ---
 
@@ -333,3 +365,5 @@ If you want to mix-and-match with the lightstrikelabs setup: keep AGENTS.md as y
 - [Example CONTEXT.md](https://github.com/mattpocock/skills/blob/main/CONTEXT.md)
 - [AI Hero Skills newsletter](https://www.aihero.dev/s/skills-newsletter)
 - John Ousterhout, [A Philosophy of Software Design](https://www.amazon.com/Philosophy-Software-Design-2nd/dp/173210221X) — the grounding for `/improve-codebase-architecture`
+- [jakubkrehel/make-interfaces-feel-better](https://github.com/jakubkrehel/make-interfaces-feel-better)
+- Jakub Krehel, [Details that make interfaces feel better](https://jakub.kr/writing/details-that-make-interfaces-feel-better)
